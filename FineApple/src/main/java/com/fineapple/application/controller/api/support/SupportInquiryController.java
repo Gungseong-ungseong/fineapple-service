@@ -24,7 +24,7 @@ public class SupportInquiryController {
     private final UserDetailServiceImp userDetailService;
 
     // 문의 전체 조회
-    @GetMapping("/all-inquiries")
+    @GetMapping("/all-inquiriessss")
     public ResponseEntity<List<InquiryResponseDto>> findAll() {
         return ResponseEntity.ok(inquiryService.getAllInquiries());
     }
