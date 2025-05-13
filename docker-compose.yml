@@ -13,11 +13,14 @@ services:
     depends_on:
       - mysql-main
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-main:3306/fineapple
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_PROFILES_ACTIVE: dev
+      IMP_API_KEY: ${IMP_API_KEY}
+      IMP_API_SECRET: ${IMP_API_SECRET}
+      IMPCODE: ${IMPCODE}
     volumes:
       - ./FineApple/target:/app/target
       - ./FineApple/src:/app/src
@@ -35,7 +38,7 @@ services:
     container_name: mysql-main-dev
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: fineapple
       HOSTNAME: mysql-main
     ports:
@@ -75,13 +78,13 @@ services:
     volumes:
       - ./batch:/app
 
-#  redis:
-#    image: redis:7.2
-#    container_name: redis-server
-#    ports:
-#      - "6379:6379"
-#    networks:
-#      - backend-net
+  #  redis:
+  #    image: redis:7.2
+  #    container_name: redis-server
+  #    ports:
+  #      - "6379:6379"
+  #    networks:
+  #      - backend-net
 
   nginx:
     build: ./nginx

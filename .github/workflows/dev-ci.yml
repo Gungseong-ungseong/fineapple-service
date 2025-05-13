@@ -12,6 +12,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+
+    env:
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_URL: ${{ secrets.DB_URL }}
+      IMP_API_KEY: ${{ secrets.IMP_API_KEY }}
+      IMP_API_SECRET: ${{ secrets.IMP_API_SECRET }}
+      IMPCODE: ${{ secrets.IMPCODE }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -33,7 +42,13 @@ jobs:
 
       - name: Build Spring (Spring Server)
         run: |
-          docker build -t fineapple-spring-dev ./FineApple
+          docker build --build-arg DB_USERNAME=$DB_USERNAME \
+                       --build-arg DB_PASSWORD=$DB_PASSWORD \
+                       --build-arg DB_URL=$DB_URL \
+                       --build-arg IMP_API_KEY=$IMP_API_KEY \
+                       --build-arg IMP_API_SECRET=$IMP_API_SECRET \
+                       --build-arg IMPCODE=$IMPCODE \
+                       -t fineapple-spring-dev ./FineApple
 
       - name: Build FastAPI
         run: |
